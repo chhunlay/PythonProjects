@@ -11,7 +11,7 @@ You are going to write a function called calculate_love_score() that tests the c
 
 e.g.
 
-name1 = "Angela Yu" name2 = "Jack Bauer"
+name1 = "Chhunlay" name2 = "Romduol"
 
 T occurs 0 times 
 
