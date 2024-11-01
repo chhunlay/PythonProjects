@@ -5,8 +5,9 @@ import subprocess
 def get_wifi_profiles():
     # Use nmcli to get a list of saved Wi-Fi profiles
     profiles_output = subprocess.check_output("nmcli connection show", shell=True).decode("utf-8")
-    profiles = re.findall(r"([^\s]+)\s+[a-f0-9:-]+\s+wifi\s", profiles_output)
-    return profiles
+    # Update the regex to match Wi-Fi profiles with spaces and special characters
+    profiles = re.findall(r"([^\n]+)\s+[a-f0-9:-]+\s+wifi\s", profiles_output)
+    return [profile.strip() for profile in profiles]
 
 def get_wifi_password(profile):
     # Get the Wi-Fi password for a given profile
