@@ -1,5 +1,6 @@
 import re
 import subprocess
+from prettytable import PrettyTable
 
 def get_wifi_profiles():
     # Use nmcli to get a list of saved Wi-Fi profiles
@@ -28,9 +29,22 @@ def main():
         password = get_wifi_password(profile)
         wifi_details.append({"Profile": profile, "Password": password})
 
-    # Display Wi-Fi details
+    # Create a PrettyTable instance
+    table = PrettyTable()
+    table.field_names = ["Profile", "Password"]
+
+    # Center align the header and left align the data
+    for field in table.field_names:
+        table.align[field] = "c"  # Center align headers
+    table.align["Profile"] = "l"  # Left align Profile data
+    table.align["Password"] = "l"  # Left align Password data
+
+    # Add rows to the table
     for wifi in wifi_details:
-        print(f"Profile: {wifi['Profile']}, Password: {wifi['Password']}")
+        table.add_row([wifi['Profile'], wifi['Password']])
+
+    # Display the Wi-Fi details in a table format
+    print(table)
 
 if __name__ == "__main__":
     main()
