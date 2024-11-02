@@ -43,23 +43,29 @@ def main():
             # Extract the region of interest (the detected face)
             face_roi = frame[y:y + h, x:x + w]
 
-            # Estimate age and gender using DeepFace
+            # Analyze the face for age, gender, and emotion using DeepFace
             try:
-                analysis = DeepFace.analyze(face_roi, actions=['age', 'gender'], enforce_detection=False)
+                analysis = DeepFace.analyze(face_roi, actions=['age', 'gender', 'emotion'], enforce_detection=False)
                 
-                # Extract gender information
+                # Extract age, gender, and emotion information
+                age = analysis[0]['age']
                 gender_info = analysis[0]['gender']
                 gender = max(gender_info.items(), key=lambda item: item[1])[0]  # Get gender with highest confidence
+                emotion_info = analysis[0]['emotion']
+                emotion = max(emotion_info.items(), key=lambda item: item[1])[0]  # Get emotion with highest confidence
 
                 # Note: The gender_info dictionary typically contains {'Male': score, 'Female': score}
+                # The emotion_info dictionary typically contains emotions like {'happy': score, 'sad': score, etc.}
             except Exception as e:
                 age = "N/A"
                 gender = "N/A"
+                emotion = "N/A"
                 print(f"Error analyzing face: {e}")
 
             distance = calculate_distance(w)  # Estimate distance using width
-            cv2.putText(frame, f'Age: {analysis[0]["age"]}', (x, y - 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+            cv2.putText(frame, f'Age: {age}', (x, y - 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
             cv2.putText(frame, f'Gender: {gender}', (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+            cv2.putText(frame, f'Emotion: {emotion}', (x, y + h + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
             cv2.putText(frame, f'Distance: {distance:.2f} cm', (x, y + h + 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
 
         # Display the resulting frame
