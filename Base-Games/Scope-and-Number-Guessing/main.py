@@ -14,7 +14,7 @@ print("Welcome to the number guessing game")
 
 def set_difficulty():
     level = input("Choose a difficulty. Type 'easy' or 'hard': ").lower()
-    if level == 'easy':
+    if level == 'easy': 
         return 10
     elif level == 'hard':
         return 5
