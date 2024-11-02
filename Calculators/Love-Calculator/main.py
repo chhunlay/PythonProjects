@@ -21,3 +21,4 @@ def calculate_love_score(name1, name2):
 name1 = "Chhun Lay"
 name2 = "Romdoul"
 calculate_love_score(name1, name2)
+ 
