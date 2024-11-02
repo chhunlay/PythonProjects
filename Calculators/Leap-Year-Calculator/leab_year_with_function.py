@@ -22,3 +22,4 @@ def is_leap_year(year):
 # Example Inputs and Outputs
 print(is_leap_year(2400))  # Output: True
 print(is_leap_year(1989))  # Output: False
+ 
